@@ -997,7 +997,7 @@ S2.define('select2/results',[
         var child = data.children[c];
 
         var $child = this.option(child);
-        if (!$child)
+        if ($child)
           $children.push($child);
       }
 
