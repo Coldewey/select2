@@ -4331,13 +4331,36 @@ S2.define('select2/dropdown/attachBody',[
         .addClass('select2-container--' + newDirection);
     }
 
+    var overrideWidth = this.$element.attr("data-override-width");
+    var shiftDirection = (this.$element.attr("data-shift-direction") || '').toLowerCase();
+    var monospace = (this.$element.attr("data-monospace") || '').toLowerCase() == "true";
+
+    if (overrideWidth && (shiftDirection == 'left' || shiftDirection == 'right')) {
+      if (shiftDirection.toLowerCase() == "left") {
+        css.left -= Number.parseInt(overrideWidth, 10);
+      }
+
+      this.$dropdown.addClass("custom-size");
+
+      if (monospace) {
+        this.$dropdown.addClass("monospace");
+      }
+    }
+
     this.$dropdownContainer.css(css);
   };
 
   AttachBody.prototype._resizeDropdown = function () {
     var css = {
-      width: this.$container.outerWidth(false) + 'px'
+      width: this.$container.outerWidth(false)
     };
+
+    var overrideWidth = this.$element.attr("data-override-width");
+    if (overrideWidth) {
+      css.width += Number.parseInt(overrideWidth, 10);
+    }
+
+    css.width += 'px';
 
     if (this.options.get('dropdownAutoWidth')) {
       css.minWidth = css.width;
